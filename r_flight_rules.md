@@ -1,5 +1,15 @@
 # R Flight Rules
+
+
 <!-- toc -->
+
+* [Data munging](#data-munging)
+  * [Subset of data frame](#subset-of-data-frame)
+    * [Keeping/dropping columns by name](#keepingdropping-columns-by-name)
+    * [Work on a subset of data frame using regular expression](#work-on-a-subset-of-data-frame-using-regular-expression)
+
+<!-- toc stop -->
+
 
 
 # Data munging
