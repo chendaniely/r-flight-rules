@@ -1,6 +1,5 @@
 ---
 title: "R Flight Rules"
-author: "Daniel Chen"
 output:
   html_document:
     keep_md: yes
@@ -8,8 +7,6 @@ output:
     toc: yes
 ---
 
-Flight rules for R
-==================
 This has been inspired by [k88hudson](https://github.com/chendaniely/git-flight-rules)
 
 Where she quotes:

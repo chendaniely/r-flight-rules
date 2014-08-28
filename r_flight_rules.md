@@ -1,8 +1,5 @@
 # R Flight Rules
-Daniel Chen  
 
-Flight rules for R
-==================
 This has been inspired by [k88hudson](https://github.com/chendaniely/git-flight-rules)
 
 Where she quotes:
