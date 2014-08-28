@@ -4,7 +4,7 @@ r-flight-rules
 Flight rules for R
 
 This has been inspired by
-[k88hudson](https://github.com/chendaniely/git-flight-rules)
+[k88hudson](https://github.com/k88hudson/git-flight-rules)
 
 Where she quotes:
 
