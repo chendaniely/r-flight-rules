@@ -7,6 +7,9 @@ output:
     toc: yes
 ---
 <!-- toc -->
+```{r,echo=FALSE}
+library(knitr)
+```
 
 # Data munging
 
@@ -32,5 +35,10 @@ df[, names(df) %in% keep]
 # dropping columns by name
 drop <- c('lname')
 df[, !(names(df) %in% drop)]
+```
+
+```{r, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+# generate .R from .Rmd withought using a Makefile
+purl("r_flight_rules.Rmd", output = "r_flight_rules.R", documentation = 2)
 ```
 

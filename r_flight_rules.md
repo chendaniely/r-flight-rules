@@ -1,13 +1,5 @@
 # R Flight Rules
-
-
 <!-- toc -->
-
-* [Data munging](#data-munging)
-  * [Subsetting](#subsetting)
-    * [Keeping/dropping columns by name](#keepingdropping-columns-by-name)
-
-<!-- toc stop -->
 
 
 # Data munging
@@ -62,4 +54,6 @@ df[, !(names(df) %in% drop)]
 ## 3  John  28
 ## 4  Jane  25
 ```
+
+
 
