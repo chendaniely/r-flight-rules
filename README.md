@@ -8,7 +8,7 @@ This has been inspired by
 
 Where she quotes:
 
-Flight rueles are a
+Flight rules are a
 [guide for astronauts](http://www.jsc.nasa.gov/news/columbia/fr_generic.pdf)
 (now, people using R) about what to do when things go wrong (when you
 need something done).
