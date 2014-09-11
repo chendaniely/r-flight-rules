@@ -69,6 +69,32 @@ q14columnsAll <- grep(pattern = q14patternAll, x = names(df))
 head(df[, q14columnsAll], n = 2)
 ```
 
+## Arrange data frame columns
+### Re-odering columns without specfying all of them
+When working with datasets with many columns, sometimes you just want to have
+the key row identification variables together and in the beginning.  For example
+if you are dealing with patient data, you may want the `id`, `dob`, and `gender`
+as the first 3 rows, respectively, and not in arbitrary column positions in the data
+
+To arrange columns by specfying all of them and/or just a subset, please see the
+[cookbook](http://www.cookbook-r.com/Manipulating_data/Reordering_the_columns_in_a_data_frame/)
+link and the 
+[dplyr vignette on `select()`](http://cran.rstudio.com/web/packages/dplyr/vignettes/introduction.html)
+```{r}
+# Create a dataframe example
+df <- as.data.frame(matrix(c(1:20), ncol=10))
+names(df)[c(3, 5, 7)] <- c("gender", "id", "dob")
+df
+```
+
+```{r}
+# we want to bring "id", "dob", and "gender" to the beginning, and keep
+# everything else the way it is
+toBeginning <- c("id", "dob", "gender")
+df <- cbind(df[, toBeginning],
+            df[, !names(df) %in% toBeginning])
+df
+```
 
 
 ```{r, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
