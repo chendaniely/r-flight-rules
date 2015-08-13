@@ -9,3 +9,4 @@
 
 # ignore html from rmarkdown and knitr
 *.html
+.Rproj.user

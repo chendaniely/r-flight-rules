@@ -1,18 +1,254 @@
 # R Flight Rules
-
-
 <!-- toc -->
 
-* [Data munging](#data-munging)
-  * [Subset of data frame](#subset-of-data-frame)
-    * [Keeping/dropping columns by name](#keepingdropping-columns-by-name)
-    * [Work on a subset of data frame using regular expression](#work-on-a-subset-of-data-frame-using-regular-expression)
-  * [Arrange data frame columns](#arrange-data-frame-columns)
-    * [Re-odering columns without specfying all of them](#re-odering-columns-without-specfying-all-of-them)
 
-<!-- toc stop -->
+# Data Profiling
+## Quality
+### Completeness
+percentage of elements properly populated e.g. testing for NULLs and empty strings where not appropriate
 
 
+```r
+# Creating the data frame
+fname <- c('Bob', 'Sally', 'John', 'Jane')
+lname <- c('Dole', 'Doe', 'Doe', 'Smith')
+age <- c(32, 24, 28, 25)
+empty_string <- c('', 'hello', 'world', '')
+space_string <- c('hello', 'world', ' ', ' ')
+missing_0 <- c(1, 2, 3, 4)
+missing_1 <- c(1, NA, 6, 7)
+missing_2 <- c(1, NA, NA, 9)
+missing_3 <- c(1, NA, NA, NA)
+df <- data.frame(fname, lname, age, empty_string, space_string,
+                 missing_0, missing_1, missing_2, missing_3, stringsAsFactors = FALSE)
+df
+```
+
+```
+##   fname lname age empty_string space_string missing_0 missing_1 missing_2
+## 1   Bob  Dole  32                     hello         1         1         1
+## 2 Sally   Doe  24        hello        world         2        NA        NA
+## 3  John   Doe  28        world                      3         6        NA
+## 4  Jane Smith  25                                   4         7         9
+##   missing_3
+## 1         1
+## 2        NA
+## 3        NA
+## 4        NA
+```
+
+
+```r
+# Count missing data across columns
+apply(is.na(df), 2, sum)
+```
+
+```
+##        fname        lname          age empty_string space_string 
+##            0            0            0            0            0 
+##    missing_0    missing_1    missing_2    missing_3 
+##            0            1            2            3
+```
+
+```r
+# count missing data across rows
+apply(is.na(df), 1, sum)
+```
+
+```
+## [1] 0 3 2 1
+```
+
+
+```r
+# na.omit() returns the object with listwise deletion of missing values.
+na.omit(df)
+```
+
+```
+##   fname lname age empty_string space_string missing_0 missing_1 missing_2
+## 1   Bob  Dole  32                     hello         1         1         1
+##   missing_3
+## 1         1
+```
+
+```r
+# complete.cases() returns a logical vector indicating which cases are complete.
+df[complete.cases(df), ]
+```
+
+```
+##   fname lname age empty_string space_string missing_0 missing_1 missing_2
+## 1   Bob  Dole  32                     hello         1         1         1
+##   missing_3
+## 1         1
+```
+
+
+```r
+# Inverted -- rows that have missing values
+df[!complete.cases(df), ]
+```
+
+```
+##   fname lname age empty_string space_string missing_0 missing_1 missing_2
+## 2 Sally   Doe  24        hello        world         2        NA        NA
+## 3  John   Doe  28        world                      3         6        NA
+## 4  Jane Smith  25                                   4         7         9
+##   missing_3
+## 2        NA
+## 3        NA
+## 4        NA
+```
+
+
+```r
+# frequency table of columns, counting NA values
+lapply(X = df, FUN = table, useNA = 'always')
+```
+
+```
+## $fname
+## 
+##   Bob  Jane  John Sally  <NA> 
+##     1     1     1     1     0 
+## 
+## $lname
+## 
+##   Doe  Dole Smith  <NA> 
+##     2     1     1     0 
+## 
+## $age
+## 
+##   24   25   28   32 <NA> 
+##    1    1    1    1    0 
+## 
+## $empty_string
+## 
+##       hello world  <NA> 
+##     2     1     1     0 
+## 
+## $space_string
+## 
+##       hello world  <NA> 
+##     2     1     1     0 
+## 
+## $missing_0
+## 
+##    1    2    3    4 <NA> 
+##    1    1    1    1    0 
+## 
+## $missing_1
+## 
+##    1    6    7 <NA> 
+##    1    1    1    1 
+## 
+## $missing_2
+## 
+##    1    9 <NA> 
+##    1    1    2 
+## 
+## $missing_3
+## 
+##    1 <NA> 
+##    1    3
+```
+
+```r
+# getting just the unique values from the columns
+lapply(X = df, FUN = unique)
+```
+
+```
+## $fname
+## [1] "Bob"   "Sally" "John"  "Jane" 
+## 
+## $lname
+## [1] "Dole"  "Doe"   "Smith"
+## 
+## $age
+## [1] 32 24 28 25
+## 
+## $empty_string
+## [1] ""      "hello" "world"
+## 
+## $space_string
+## [1] "hello" "world" " "    
+## 
+## $missing_0
+## [1] 1 2 3 4
+## 
+## $missing_1
+## [1]  1 NA  6  7
+## 
+## $missing_2
+## [1]  1 NA  9
+## 
+## $missing_3
+## [1]  1 NA
+```
+
+
+```r
+# get freq counts into a list where each element in a list is a dataframe
+lapply(X = df, FUN = function(x){aggregate(data.frame(count = x), list(value = x), length)})
+```
+
+```
+## $fname
+##   value count
+## 1   Bob     1
+## 2  Jane     1
+## 3  John     1
+## 4 Sally     1
+## 
+## $lname
+##   value count
+## 1   Doe     2
+## 2  Dole     1
+## 3 Smith     1
+## 
+## $age
+##   value count
+## 1    24     1
+## 2    25     1
+## 3    28     1
+## 4    32     1
+## 
+## $empty_string
+##   value count
+## 1           2
+## 2 hello     1
+## 3 world     1
+## 
+## $space_string
+##   value count
+## 1           2
+## 2 hello     1
+## 3 world     1
+## 
+## $missing_0
+##   value count
+## 1     1     1
+## 2     2     1
+## 3     3     1
+## 4     4     1
+## 
+## $missing_1
+##   value count
+## 1     1     1
+## 2     6     1
+## 3     7     1
+## 
+## $missing_2
+##   value count
+## 1     1     1
+## 2     9     1
+## 
+## $missing_3
+##   value count
+## 1     1     1
+```
 
 # Data munging
 ## Subset of data frame

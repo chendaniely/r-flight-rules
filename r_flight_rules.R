@@ -7,8 +7,63 @@
 #'     toc: yes
 #' ---
 #' <!-- toc -->
-## ----,echo=FALSE---------------------------------------------------------
+## ----echo=FALSE----------------------------------------------------------
 library(knitr)
+
+#' 
+#' # Data Profiling
+#' ## Quality
+#' ### Completeness
+#' percentage of elements properly populated e.g. testing for NULLs and empty strings where not appropriate
+#' 
+## ------------------------------------------------------------------------
+# Creating the data frame
+fname <- c('Bob', 'Sally', 'John', 'Jane')
+lname <- c('Dole', 'Doe', 'Doe', 'Smith')
+age <- c(32, 24, 28, 25)
+empty_string <- c('', 'hello', 'world', '')
+space_string <- c('hello', 'world', ' ', ' ')
+missing_0 <- c(1, 2, 3, 4)
+missing_1 <- c(1, NA, 6, 7)
+missing_2 <- c(1, NA, NA, 9)
+missing_3 <- c(1, NA, NA, NA)
+df <- data.frame(fname, lname, age, empty_string, space_string,
+                 missing_0, missing_1, missing_2, missing_3, stringsAsFactors = FALSE)
+df
+
+#' 
+## ------------------------------------------------------------------------
+# Count missing data across columns
+apply(is.na(df), 2, sum)
+
+# count missing data across rows
+apply(is.na(df), 1, sum)
+
+#' 
+## ------------------------------------------------------------------------
+# na.omit() returns the object with listwise deletion of missing values.
+na.omit(df)
+
+# complete.cases() returns a logical vector indicating which cases are complete.
+df[complete.cases(df), ]
+
+#' 
+## ------------------------------------------------------------------------
+# Inverted -- rows that have missing values
+df[!complete.cases(df), ]
+
+#' 
+## ------------------------------------------------------------------------
+# frequency table of columns, counting NA values
+lapply(X = df, FUN = table, useNA = 'always')
+
+# getting just the unique values from the columns
+lapply(X = df, FUN = unique)
+
+#' 
+## ------------------------------------------------------------------------
+# get freq counts into a list where each element in a list is a dataframe
+lapply(X = df, FUN = function(x){aggregate(data.frame(count = x), list(value = x), length)})
 
 #' 
 #' # Data munging
@@ -97,7 +152,7 @@ df
 
 #' 
 #' 
-## ----, echo=FALSE, results='hide', message=FALSE, warning=FALSE----------
+## ---- echo=FALSE, results='hide', message=FALSE, warning=FALSE-----------
 # generate .R from .Rmd withought using a Makefile
 purl("r_flight_rules.Rmd", output = "r_flight_rules.R", documentation = 2)
 
