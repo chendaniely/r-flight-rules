@@ -1,5 +1,5 @@
 # R Flight Rules
-<!-- MarkdownTOC depth=3 -->
+<!-- MarkdownTOC depth=3 withLinks:1-->
 
 - [Data Profiling][data-profiling]
 	- [Quality][quality]
