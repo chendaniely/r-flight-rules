@@ -1,5 +1,20 @@
 # R Flight Rules
-<!-- toc -->
+
+<!-- MarkdownTOC depth=3 autolink=true bracket=round -->
+
+- [Data Profiling](#data-profiling)
+    - [Quality](#quality)
+        - [Completeness](#completeness)
+        - [Consistencty](#consistencty)
+- [Data munging](#data-munging)
+    - [Subset of data frame](#subset-of-data-frame)
+        - [Keeping/dropping columns by name](#keepingdropping-columns-by-name)
+        - [Work on a subset of data frame using regular expression](#work-on-a-subset-of-data-frame-using-regular-expression)
+    - [Arrange data frame columns](#arrange-data-frame-columns)
+        - [Re-odering columns without specfying all of them](#re-odering-columns-without-specfying-all-of-them)
+
+<!-- /MarkdownTOC -->
+
 
 # Data Profiling
 ## Quality
