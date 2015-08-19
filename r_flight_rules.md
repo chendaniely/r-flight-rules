@@ -1,7 +1,7 @@
 # R Flight Rules
 
 
-<!-- MarkdownTOC -->
+<!-- MarkdownTOC depth=3 autolink=true bracket=round -->
 
 - [Data Profiling](#data-profiling)
 	- [Quality](#quality)
