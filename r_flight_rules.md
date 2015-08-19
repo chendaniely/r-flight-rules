@@ -1,7 +1,6 @@
 # R Flight Rules
 <!-- toc -->
 
-
 # Data Profiling
 ## Quality
 ### Completeness
