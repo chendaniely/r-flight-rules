@@ -18,17 +18,15 @@ percentage of elements properly populated e.g. testing for NULLs and empty strin
 
 ```{r}
 # Creating the data frame
-fname <- c('Bob', 'Sally', 'John', 'Jane')
-lname <- c('Dole', 'Doe', 'Doe', 'Smith')
-age <- c(32, 24, 28, 25)
+name <- c('Bob', 'Sally', 'John', 'Jane')
 empty_string <- c('', 'hello', 'world', '')
 space_string <- c('hello', 'world', ' ', ' ')
-missing_0 <- c(1, 2, 3, 4)
-missing_1 <- c(1, NA, 6, 7)
-missing_2 <- c(1, NA, NA, 9)
-missing_3 <- c(1, NA, NA, NA)
-df <- data.frame(fname, lname, age, empty_string, space_string,
-                 missing_0, missing_1, missing_2, missing_3, stringsAsFactors = FALSE)
+NA_0 <- c(1, 2, 3, 4)
+NA_1 <- c(1, NA, 6, 7)
+NA_2 <- c(1, NA, NA, 9)
+NA_3 <- c(1, NA, NA, NA)
+df <- data.frame(name, empty_string, space_string,
+                 NA_0, NA_1, NA_2, NA_3, stringsAsFactors = FALSE)
 df
 ```
 
