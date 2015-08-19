@@ -263,6 +263,51 @@ lapply(X = df, FUN = function(x){aggregate(data.frame(count = x), list(value = x
 ## 1     1     1
 ```
 
+### Consistencty
+
+```r
+# generate sample dataframe
+fname <- c('Bob', 'Sally', 'John', 'Jane')
+g1 <- c('M', 'F', 'M', 'F')
+g2 <- c('M', 'F', 'M', 'F')
+g3 <- c('M', 'F', 'M', 'F')
+g4 <- c('F', 'F', 'M', 'M')
+
+df <- data.frame(fname, g1, g2, g3, g4, stringsAsFactors = FALSE)
+df
+```
+
+```
+##   fname g1 g2 g3 g4
+## 1   Bob  M  M  M  F
+## 2 Sally  F  F  F  F
+## 3  John  M  M  M  M
+## 4  Jane  F  F  F  M
+```
+
+
+```r
+# looks for a pattern that begins with "g" followed by 1 other characters
+columns <- grep(pattern = "g.?", x = names(df))
+
+# use the columns that match the pattern to subset the data
+all_g <- df[, columns]
+
+# compares if the first element is the same across the entire row
+all_same <- apply(X = all_g, MARGIN = 1, function(x){all(x[1] == x)})
+
+# return rows where values are not the same across
+different <- all_g[!all_same, ]
+
+# number of different obervations
+nrow(different)
+```
+
+```
+## [1] 2
+```
+
+
 # Data munging
 ## Subset of data frame
 ### Keeping/dropping columns by name
