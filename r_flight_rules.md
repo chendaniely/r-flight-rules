@@ -1,19 +1,5 @@
 # R Flight Rules
-
-<!-- MarkdownTOC depth=3 autolink=true bracket=round -->
-
-- [Data Profiling](#data-profiling)
-    - [Quality](#quality)
-        - [Completeness](#completeness)
-        - [Consistencty](#consistencty)
-- [Data munging](#data-munging)
-    - [Subset of data frame](#subset-of-data-frame)
-        - [Keeping/dropping columns by name](#keepingdropping-columns-by-name)
-        - [Work on a subset of data frame using regular expression](#work-on-a-subset-of-data-frame-using-regular-expression)
-    - [Arrange data frame columns](#arrange-data-frame-columns)
-        - [Re-odering columns without specfying all of them](#re-odering-columns-without-specfying-all-of-them)
-
-<!-- /MarkdownTOC -->
+<!-- toc -->
 
 
 # Data Profiling
@@ -420,4 +406,35 @@ df
 
 
 
+
+## Apply function on df
+### Selection df column in `apply`
+
+
+```r
+df <- data.frame(x = 1:5, y = 11:15, z = 101:105)
+df
+```
+
+```
+##   x  y   z
+## 1 1 11 101
+## 2 2 12 102
+## 3 3 13 103
+## 4 4 14 104
+## 5 5 15 105
+```
+
+```r
+my_square <- function(row) {
+    x <- row['x']
+    return(x ** 2)
+}
+
+apply(X = df, MARGIN = 1, FUN = my_square)
+```
+
+```
+## [1]  1  4  9 16 25
+```
 

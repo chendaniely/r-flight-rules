@@ -186,3 +186,19 @@ df
 purl("r_flight_rules.Rmd", output = "r_flight_rules.R", documentation = 2)
 ```
 
+## Apply function on df
+### Selection df column in `apply`
+
+```{r}
+df <- data.frame(x = 1:5, y = 11:15, z = 101:105)
+df
+
+my_square <- function(row) {
+    x <- row['x']
+    return(x ** 2)
+}
+
+apply(X = df, MARGIN = 1, FUN = my_square)
+
+```
+
