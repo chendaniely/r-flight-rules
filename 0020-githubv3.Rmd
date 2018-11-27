@@ -5,6 +5,24 @@ editor_options:
 ---
 # Github APIv3 (REST)
 
+```{r, echo=FALSE}
+library(knitr)
+# the default output hook
+hook_output = knit_hooks$get('output')
+knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x = unlist(stringr::str_split(x, '\n'))
+    if (length(x) > n) {
+      # truncate the output
+      x = c(head(x, n), '....\n')
+    }
+    x = paste(x, collapse = '\n') # paste first n lines together
+  }
+  hook_output(x, options)
+})
+```
+
+
 ```{r}
 library(jsonlite)
 library(httpuv)
@@ -32,14 +50,14 @@ gh::gh("https://api.github.com/zen")
 
 You can pass in the raw GET command
 
-```{r}
+```{r, out.lines=20}
 gh("https://api.github.com/users/chendaniely")
 ```
 
 Or create "variables" that you can pass in using the `:` in the GET command,
 this comes in handy when you start working wiht the various endpoints.
 
-```{r}
+```{r, out.lines=20}
 gh("https://api.github.com/users/:user", user = 'chendaniely')
 ```
 
@@ -51,8 +69,8 @@ GET /orgs/:org/repos
 
 Can be passed into the `gh` function as well
 
-```{r}
-gh("/repos/:owner/:repo/contributors", owner = 'numpy', repo = 'numpy')
+```{r, out.lines = 20}
+gh("/orgs/:org/repos", org = 'numpy')
 ```
 
 
