@@ -1,0 +1,58 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Github APIv3 (REST)
+
+```{r}
+library(jsonlite)
+library(httpuv)
+library(httr)
+library(gh)
+
+token <- Sys.getenv("GH_CLIENT_SECRET")
+if (token == '') {
+  stop('You need a github token', call. = FALSE)
+}
+```
+
+The Github REST API v3 lists everything as `curl` commands,
+so when they say something like:
+
+```{bash}
+curl https://api.github.com/zen
+```
+
+You can make the equlivalent call from the `gh` package:
+
+```{r}
+gh::gh("https://api.github.com/zen")
+```
+
+You can pass in the raw GET command
+
+```{r}
+gh("https://api.github.com/users/chendaniely")
+```
+
+Or create "variables" that you can pass in using the `:` in the GET command,
+this comes in handy when you start working wiht the various endpoints.
+
+```{r}
+gh("https://api.github.com/users/:user", user = 'chendaniely')
+```
+
+For example, the endpoint for listing organization repositories
+
+```
+GET /orgs/:org/repos
+```
+
+Can be passed into the `gh` function as well
+
+```{r}
+gh("/repos/:owner/:repo/contributors", owner = 'numpy', repo = 'numpy')
+```
+
+
