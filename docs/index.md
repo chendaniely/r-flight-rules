@@ -1,7 +1,21 @@
-r-flight-rules
-==============
 
-Flight rules for R
+--- 
+title: "R Flight Rules"
+#author: "Daniel Chen"
+#date: "2018-11-27"
+site: bookdown::bookdown_site
+output:
+  bookdown::gitbook:
+    lib_dir: "book_assets"
+documentclass: book
+#bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: chendaniely/r-flight-rules
+description: "Doing things in R" 
+---
+
+# Flight rules for R
 
 This has been inspired by
 [k88hudson](https://github.com/k88hudson/git-flight-rules)
@@ -25,6 +39,3 @@ need something done).
 > hatch handles to computer glitches, and their solutions.
 
 &mdash; Chris Hadfield, *An Astronaut's Guide to Life*.
-
-I converted my notes from a series of documents into a "book" via R Markdown and bookdown.
-Should make going through the examples easier to find/read/follow.
